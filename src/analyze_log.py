@@ -26,9 +26,11 @@ def findMostFrequentMeal(meals):
     return mostFrequentTuple[0]
 
 
-def write_campaign(filepath, info):
-    with open(filepath, "a+") as text_file:
-        text_file.write("{0}\n".format(info))
+def write_campaign(filepath, infos):
+
+    with open(filepath, "w") as text_file:
+        for info in infos:
+            text_file.write("{0}\n".format(info))
 
 
 def findQuantity(meals, meal):
@@ -69,28 +71,33 @@ def costumerWentAt(costumer, filepath):
 
 
 def analyze_log(path_to_file):
+    to_write_campaign = []
+    campaign_file = "data/mkt_campaign.txt"
+
     maria_dishes = findDishesQnt("maria", path_to_file)
     most_frequent_maria_dish = findMostFrequentMeal(maria_dishes)
 
-    campaign_file = "data/mkt_campaign.txt"
-    write_campaign(campaign_file, most_frequent_maria_dish)
+    to_write_campaign.append(most_frequent_maria_dish)
 
     arnaldo_dishes = findDishesQnt("arnaldo", path_to_file)
     quantityPerFood = findQuantity(arnaldo_dishes, "hamburguer")
-    write_campaign(campaign_file, quantityPerFood)
+    to_write_campaign.append(quantityPerFood)
 
     joao_dishes = set(findDishesQnt("joao", path_to_file))
     all_dishes = set(getAllDishes(path_to_file))
     dishes_difference = all_dishes.difference(joao_dishes)
-    write_campaign(campaign_file, dishes_difference)
+    to_write_campaign.append(dishes_difference)
 
     joao_days = set(costumerWentAt("joao", path_to_file))
     all_days = set(getAllDays(path_to_file))
     days_difference = all_days.difference(joao_days)
-    write_campaign(campaign_file, days_difference)
 
+    to_write_campaign.append(days_difference)
+
+    write_campaign(campaign_file, to_write_campaign)
+    # write_campaign(to_write_campaign)
     # print(all_days)
     # print(joao_days)
 
 
-# analyze_log("data/orders_1.csv")
+analyze_log("data/orders_1.csv")
