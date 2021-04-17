@@ -1,6 +1,7 @@
 from collections import defaultdict
 from collections import Counter
 
+
 class TrackOrders:
     def __init__(self):
         self.orders = []
@@ -14,9 +15,9 @@ class TrackOrders:
     def get_most_ordered_dish_per_costumer(self, costumer):
         dishesByCostumer = defaultdict(int)
         for order in self.orders:
-            if order['costumer'] == costumer:
-                dishesByCostumer[order['order']] += 1
-        return (Counter(dishesByCostumer).most_common(1)[0][0])
+            if order["costumer"] == costumer:
+                dishesByCostumer[order["order"]] += 1
+        return Counter(dishesByCostumer).most_common(1)[0][0]
 
     # def get_order_frequency_per_costumer(self, costumer, order):
     #     pass
@@ -26,44 +27,37 @@ class TrackOrders:
         dishes_by_costumer = set()
 
         for order in self.orders:
-            all_dishes.add(order['order'])
-            if order['costumer'] == costumer:
-                dishes_by_costumer.add(order['order'])
+            all_dishes.add(order["order"])
+            if order["costumer"] == costumer:
+                dishes_by_costumer.add(order["order"])
 
-        return(all_dishes.difference(dishes_by_costumer))
+        return all_dishes.difference(dishes_by_costumer)
 
     def get_days_never_visited_per_costumer(self, costumer):
         all_days = set()
         costumer_days = set()
 
         for order in self.orders:
-            all_days.add(order['day'])
-            if order['costumer'] == costumer:
-                costumer_days.add(order['day'])
+            all_days.add(order["day"])
+            if order["costumer"] == costumer:
+                costumer_days.add(order["day"])
 
-        return(all_days.difference(costumer_days))
+        return all_days.difference(costumer_days)
 
     def get_busiest_day(self):
-        pass
+        # Somar os dias
+        orders_per_day = defaultdict(int)
+
+        for order in self.orders:
+            orders_per_day[order["day"]] += 1
+
+        return Counter(orders_per_day).most_common(1)[0][0]
 
     def get_least_busy_day(self):
-        pass
+        orders_per_day = defaultdict(int)
 
+        for order in self.orders:
+            orders_per_day[order["day"]] += 1
+        
+        return(Counter(orders_per_day).most_common()[-1][0])
 
-csv_parsed = [
-    ["maria", "pizza", "terça-feira"],
-    ["maria", "hamburguer", "terça-feira"],
-    ["joao", "hamburguer", "terça-feira"],
-    ["maria", "coxinha", "segunda-feira"],
-    ["arnaldo", "misto-quente", "terça-feira"],
-    ["jose", "hamburguer", "sabado"],
-    ["maria", "hamburguer", "terça-feira"],
-    ["maria", "hamburguer", "terça-feira"],
-    ["joao", "hamburguer", "terça-feira"],
-]
-
-track_orders = TrackOrders()
-for name, food, day in csv_parsed:
-    track_orders.add_new_order(name, food, day)
-never_visited = track_orders.get_days_never_visited_per_costumer("joao")
-assert {"segunda-feira", "sabado"} == never_visited
