@@ -58,6 +58,5 @@ class TrackOrders:
 
         for order in self.orders:
             orders_per_day[order["day"]] += 1
-        
-        return(Counter(orders_per_day).most_common()[-1][0])
 
+        return Counter(orders_per_day).most_common()[-1][0]
