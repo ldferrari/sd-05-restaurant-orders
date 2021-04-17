@@ -100,4 +100,4 @@ def analyze_log(path_to_file):
     # print(joao_days)
 
 
-analyze_log("data/orders_1.csv")
+# analyze_log("data/orders_1.csv")
