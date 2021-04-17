@@ -18,11 +18,19 @@ class TrackOrders:
                 dishesByCostumer[order['order']] += 1
         return (Counter(dishesByCostumer).most_common(1)[0][0])
 
-    def get_order_frequency_per_costumer(self, costumer, order):
-        pass
+    # def get_order_frequency_per_costumer(self, costumer, order):
+    #     pass
 
     def get_never_ordered_per_costumer(self, costumer):
-        pass
+        all_dishes = set()
+        dishes_by_costumer = set()
+
+        for order in self.orders:
+            all_dishes.add(order['order'])
+            if order['costumer'] == costumer:
+                dishes_by_costumer.add(order['order'])
+
+        return(all_dishes.difference(dishes_by_costumer))
 
     def get_days_never_visited_per_costumer(self, costumer):
         pass
@@ -49,5 +57,5 @@ csv_parsed = [
 track_orders = TrackOrders()
 for name, food, day in csv_parsed:
     track_orders.add_new_order(name, food, day)
-most_ordered = track_orders.get_most_ordered_dish_per_costumer("maria")
-assert "hamburguer" == most_ordered
+never_ordered = track_orders.get_never_ordered_per_costumer("joao")
+assert "coxinha" in never_ordered == {"coxinha", "pizza", "misto-quente"}
