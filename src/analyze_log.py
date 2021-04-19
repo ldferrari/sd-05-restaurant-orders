@@ -6,6 +6,8 @@ PATH = "data/orders_1.csv"
 
 
 def read_csv(file_path):
+    if file_path.split('.')[1] != 'csv':
+        raise ValueError("Arquivo inválido")
     try:
         with open(file_path, 'r') as file:
             data = csv.reader(file, delimiter=',')
