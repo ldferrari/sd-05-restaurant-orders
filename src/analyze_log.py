@@ -7,7 +7,9 @@ def analyze_log(path_to_file):
         data = list(csv.reader(file))
     all_dishes = set()
     all_weekdays = set()
-    orders = defaultdict(lambda: {'dishes': defaultdict(int), 'weekdays': defaultdict(int)})
+    orders = defaultdict(lambda:
+                         {'dishes': defaultdict(int),
+                          'weekdays': defaultdict(int)})
 
     maria_dish = None
 
@@ -18,10 +20,13 @@ def analyze_log(path_to_file):
         this_order['weekdays'][weekday] += 1
         all_dishes.add(dish)
         all_weekdays.add(weekday)
-        if (name == 'maria' and dishes[dish] > dishes[maria_dish] or not maria_dish):
+        if (name == 'maria' and
+                dishes[dish] > dishes[maria_dish] or not
+                    maria_dish):
             maria_dish = dish
 
     lines = []
+
     def append_line(txt):
         if not isinstance(txt, str):
             txt = str(txt)
@@ -36,5 +41,6 @@ def analyze_log(path_to_file):
 
     with open('data/mkt_campaign.txt', 'w', encoding='utf-8') as file:
         file.writelines(lines)
+
 
 analyze_log('./data/orders_1.csv')
