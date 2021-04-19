@@ -1,10 +1,7 @@
 import csv
-# from collections import defaultdict
 
 
 def person_eats_dict(path_to_file, person):
-    # try:
-    #     assert path_to_file.endswith('.csv')
     with open(path_to_file) as file:
         arquivo = csv.reader(file, delimiter=',')
         meals = {}
@@ -15,12 +12,6 @@ def person_eats_dict(path_to_file, person):
                 else:
                     meals[row[1]] += 1
     return meals
-    # except AssertionError:
-    #     raise ValueError("Formato invalido")
-    # except FileNotFoundError:
-    #     # raise ValueError(f'Arquivo {path_to_file} não encontrado')
-    #     raise FileNotFoundError(f'No such file or directory: {path_to_file}')
-    # print(maria_eats_dict("data/orders_1.csv"))
 
 
 def most_ordered(meals):
@@ -64,8 +55,6 @@ def all_days(path_to_file):
 
 
 def person_days_dict(path_to_file, person):
-    # try:
-    #     assert path_to_file.endswith('.csv')
     with open(path_to_file) as file:
         arquivo = csv.reader(file, delimiter=',')
         days = {}
@@ -117,8 +106,10 @@ def analyze_log(path_to_file):
     #     raise FileNotFoundError(f'No such file or directory: {path_to_file}')
 
 
-analyze_log("data/orders_1.csv")
+# analyze_log("data/orders_1.csv")
 
 
 # transparencia e referencias:
+# refatorei a parte de encontrar a "diferença" após ver o PR
+# do colega D'Andrea, solução muito mais elegante!
 # https://stackoverflow.com/questions/20304824/sort-dict-by-highest-value
