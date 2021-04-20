@@ -1,8 +1,10 @@
 import csv
 from collections import defaultdict
+import os
+import errno
 
 # 1. Em cada function, transformar orders_1.csv em objeto relevante
-# 2. Functions necessárias para achar os 4 elementos pedidos
+# 2. Functions necessárias para depois achar os 4 elementos pedidos
 
 
 def get_all_dishes(path_to_file):
@@ -58,7 +60,7 @@ def most_ordered_dishes(path_to_file, costumer):
     # formato retornado: {'hamburguer': 16, 'pizza': 8, 'coxinha': 8}
 
 
-# 3. Achar os 4 elementos pedidos
+# 3. Functions para o detalhe dos 4 elementos pedidos
 # 3.1 Prato mais pedido por cliente ('maria')
 def most_ordered_dish_by_customer(path_to_file, customer):
     dish = list(most_ordered_dishes(path_to_file, customer).keys())[0]
@@ -88,22 +90,30 @@ def get_never_went(path_to_file, customer):
 
 # 4. Mandar as respostas no arquivo data/mkt_campaign.txt
 def analyze_log(path_to_file):
-    data_path = 'data/orders_1.csv'
-    final_text = []
-    final_text.append(most_ordered_dish_by_customer(data_path, 'maria'))
-    final_text.append(count_dish_customer(data_path, 'arnaldo', 'hamburguer'))
-    final_text.append(get_never_ordered(data_path, 'joao'))
-    final_text.append(get_never_went(data_path, 'joao'))
-    # print(final_text)
-    destination_path = "data/mkt_campaign.txt"
-    with open(destination_path, "w") as final_file:
-        for element in final_text:
-            final_file.write(str(element) + "\n")
-            # https://stackoverflow.com/questions/37289951/how-to-write-to-a-csv-line-by-line
-    # without try except
+    if os.path.isfile(path_to_file) and path_to_file.endswith('.csv'):
+        data_path = 'data/orders_1.csv'
+        text = []
+        text.append(most_ordered_dish_by_customer(data_path, 'maria'))
+        text.append(count_dish_customer(data_path, 'arnaldo', 'hamburguer'))
+        text.append(get_never_ordered(data_path, 'joao'))
+        text.append(get_never_went(data_path, 'joao'))
+        # print(final_text)
+        destination_path = "data/mkt_campaign.txt"
+        with open(destination_path, "w") as final_file:
+            for element in text:
+                final_file.write(str(element) + "\n")
+                # https://stackoverflow.com/questions/37289951/how-to-write-to-a-csv-line-by-line
+    else:
+        raise FileNotFoundError(
+            errno.ENOENT, os.strerror(errno.ENOENT), path_to_file
+        )
+    # https://docs.python.org/3/library/os.html
+    # https://stackoverflow.com/questions/36077266/how-do-i-raise-a-filenotfounderror-properly
 
 
 if __name__ == "__main__":
-    # print(get_never_ordered('data/orders_1.csv', 'joao'))
-    # print(get_never_went('data/orders_1.csv', 'joao'))
     print(analyze_log('data/orders_1.csv'))
+
+# Honestidade acadêmica
+# https://github.com/tryber/sd-05-restaurant-orders/pull/5/files
+# https://github.com/tryber/sd-05-restaurant-orders/pull/3/files
