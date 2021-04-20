@@ -16,9 +16,9 @@ class TrackOrders:
         for order in self.orders:
             if order["costumer"] == costumer:
                 dishes_cstmer[order["order"]] += 1
-        # print(dishes_by_customer)
+        # print(dishes_cstmer)
         sorting = sorted(dishes_cstmer, key=dishes_cstmer.get, reverse=True)
-        # print(dishes_sorted)
+        # print(sorting)
         most_ordered_dish = sorting[0]
         return most_ordered_dish
 
@@ -37,10 +37,35 @@ class TrackOrders:
         return never_ordered_dish
 
     def get_days_never_visited_per_costumer(self, costumer):
-        pass
+        all_days = set()
+        customer_days = set()
+        for order in self.orders:
+            all_days.add(order["day"])
+            if order["costumer"] == costumer:
+                customer_days.add(order["day"])
+        never_went_days = all_days.difference(customer_days)
+        return never_went_days
 
     def get_busiest_day(self):
-        pass
+        days = defaultdict(int)
+        for order in self.orders:
+            if order["day"] not in days:
+                days[order["day"]] = 1
+            else:
+                days[order['day']] += 1
+        # print(days)
+        sorting = sorted(days, key=days.get, reverse=True)
+        busiest_day = sorting[0]
+        return busiest_day
 
     def get_least_busy_day(self):
-        pass
+        # same with different sorting
+        days = defaultdict(int)
+        for order in self.orders:
+            if order["day"] not in days:
+                days[order["day"]] = 1
+            else:
+                days[order['day']] += 1
+        sorting = sorted(days, key=days.get)
+        least_busy_day = sorting[0]
+        return least_busy_day
