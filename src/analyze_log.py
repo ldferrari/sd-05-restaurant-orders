@@ -2,30 +2,22 @@ import csv
 import operator
 
 
-PATH = "data/orders_1.csv"
-
-
 def read_csv(file_path):
-    if file_path.split('.')[1] != 'csv':
-        raise ValueError("Arquivo inválido")
-    try:
-        with open(file_path, 'r') as file:
-            data = csv.reader(file, delimiter=',')
-            output = []
+    with open(file_path, 'r') as file:
+        data = csv.reader(file, delimiter=',')
+        output = []
+        linha = {}
+        header = ["nome", "pedido", "dia"]
+        for line in data:
+            for index, value in enumerate(header):
+                linha[value] = line[index]
+            output.append(linha)
             linha = {}
-            header = ["nome", "pedido", "dia"]
-            for line in data:
-                for index, value in enumerate(header):
-                    linha[value] = line[index]
-                output.append(linha)
-                linha = {}
-            return output
-    except FileNotFoundError:
-        raise ValueError("File not found")
+        return output
 
 
-def pedidos_do_cliente(cliente):
-    data = read_csv(PATH)
+def pedidos_do_cliente(file_path, cliente):
+    data = read_csv(file_path)
     pedidos = dict({})
     for linha in data:
         if linha["nome"] == cliente:
@@ -36,35 +28,35 @@ def pedidos_do_cliente(cliente):
     return pedidos
 
 
-def mais_pedido_cliente(cliente):
-    pedidos = pedidos_do_cliente(cliente)
+def mais_pedido_cliente(file_path, cliente):
+    pedidos = pedidos_do_cliente(file_path, cliente)
     mais_pedido = max(pedidos.items(), key=operator.itemgetter(1))[0]
     return mais_pedido
 
 
-def soma_vezes_pediu_tal_comida(cliente, comida):
-    pedidos = pedidos_do_cliente(cliente)
+def sum_ped_food(file_path, cliente, comida):
+    pedidos = pedidos_do_cliente(file_path, cliente)
     if comida in pedidos:
         return pedidos[comida]
     return 0
 
 
-def set_cardapio():
-    data = read_csv(PATH)
+def set_cardapio(file_path):
+    data = read_csv(file_path)
     cardapio = set()
     for linha in data:
         cardapio.add(linha["pedido"])
     return cardapio
 
 
-def pratos_cliente_nao_pediu(cliente):
-    cardapio = set_cardapio()
-    pedidos_cliente = set(pedidos_do_cliente(cliente).keys())
+def pratos_cliente_nao_pediu(file_path, cliente):
+    cardapio = set_cardapio(file_path)
+    pedidos_cliente = set(pedidos_do_cliente(file_path, cliente).keys())
     return cardapio - pedidos_cliente
 
 
-def dias_cliente_apareceu(cliente):
-    data = read_csv(PATH)
+def dias_cliente_apareceu(file_path, cliente):
+    data = read_csv(file_path)
     dias = set()
     for linha in data:
         if linha["nome"] == cliente:
@@ -72,28 +64,19 @@ def dias_cliente_apareceu(cliente):
     return dias
 
 
-def dias_cliente_nao_apareceu(cliente):
-    diasCliente = dias_cliente_apareceu(cliente)
+def dias_cliente_nao_apareceu(file_path, cliente):
+    diasCliente = dias_cliente_apareceu(file_path, cliente)
     diasAberto = set({"sabado", "segunda-feira", "terça-feira"})
     return diasAberto - diasCliente
 
 
 def analyze_log(path_to_file):
     resultado = []
-    resultado.append(mais_pedido_cliente("maria"))
-    resultado.append(soma_vezes_pediu_tal_comida("arnaldo", "hamburguer"))
-    resultado.append(pratos_cliente_nao_pediu("joao"))
-    resultado.append(dias_cliente_nao_apareceu("joao"))
+    resultado.append(mais_pedido_cliente(path_to_file, "maria"))
+    resultado.append(sum_ped_food(path_to_file, "arnaldo", "hamburguer"))
+    resultado.append(pratos_cliente_nao_pediu(path_to_file, "joao"))
+    resultado.append(dias_cliente_nao_apareceu(path_to_file, "joao"))
     print(resultado)
     with open("data/mkt_campaign.txt", "w") as text_file:
         for value in resultado:
             text_file.write(str(value) + "\n")
-
-
-analyze_log(PATH)
-
-
-print(mais_pedido_cliente("maria"))
-print(soma_vezes_pediu_tal_comida("arnaldo", "hamburguer"))
-print(pratos_cliente_nao_pediu("joao"))
-print(dias_cliente_nao_apareceu("joao"))
