@@ -15,8 +15,6 @@ class TrackOrders:
             'day': day
         })
 
-
-
     def get_most_ordered_dish_per_costumer(self, costumer):
         dishes = defaultdict(int)
         for item in self.orders:
@@ -27,7 +25,6 @@ class TrackOrders:
     def get_order_frequency_per_costumer(self, costumer, order):
         pass
 
-
     def get_never_ordered_per_costumer(self, costumer):
         dishesByCustumer = set()
         allDishes = set()
@@ -36,7 +33,6 @@ class TrackOrders:
             if item['costumer'] == costumer:
                 dishesByCustumer.add(item['order'])
         return allDishes.difference(dishesByCustumer)
-
 
     def get_days_never_visited_per_costumer(self, costumer):
         daysByCustumer = set()
