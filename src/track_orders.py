@@ -44,7 +44,21 @@ class TrackOrders:
         return dias_funcionando - dias_cliente_apareceu
 
     def get_busiest_day(self):
-        pass
+        dias = dict({})
+        for order in self.orders:
+            if order["day"] in dias:
+                dias[order["day"]] += 1
+            else:
+                dias[order["day"]] = 1
+        dia_mais_mov = max(dias.items(), key=operator.itemgetter(1))[0]
+        return dia_mais_mov
 
     def get_least_busy_day(self):
-        pass
+        dias = dict({})
+        for order in self.orders:
+            if order["day"] in dias:
+                dias[order["day"]] += 1
+            else:
+                dias[order["day"]] = 1
+        dia_menos_mov = min(dias.items(), key=operator.itemgetter(1))[0]
+        return dia_menos_mov
