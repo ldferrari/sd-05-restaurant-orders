@@ -26,10 +26,22 @@ class TrackOrders:
         pass
 
     def get_never_ordered_per_costumer(self, costumer):
-        pass
+        cardapio = set()
+        pedidos_cliente = set()
+        for order in self.orders:
+            cardapio.add(order["order"])
+            if order["costumer"] == costumer:
+                pedidos_cliente.add(order["order"])
+        return cardapio - pedidos_cliente
 
     def get_days_never_visited_per_costumer(self, costumer):
-        pass
+        dias_funcionando = set()
+        dias_cliente_apareceu = set()
+        for order in self.orders:
+            dias_funcionando.add(order["day"])
+            if order["costumer"] == costumer:
+                dias_cliente_apareceu.add(order["day"])
+        return dias_funcionando - dias_cliente_apareceu
 
     def get_busiest_day(self):
         pass
