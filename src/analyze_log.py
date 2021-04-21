@@ -8,7 +8,7 @@ def analyze_log(path_to_file):
 
         # Array para poder fazer a o mode para saber qual
         # foi o mais pedido
-        pedidos_maria = [] 
+        pedidos_maria = []
         hamburguer_arnaldo = 0
         pratos = set()
         dias = set()
@@ -31,12 +31,12 @@ def analyze_log(path_to_file):
                 pratos_joao.add(row["prato"])
                 # Quais dias 'joao' nunca foi na lanchonete?
                 dias_joao.add(row["dia"])
-        
+
         # Quais pratos 'joao' nunca pediu?
         joao_nunca_pediu = pratos.difference(pratos_joao)
         # Quais dias 'joao' nunca foi na lanchonete?
         joao_nunca_foi = dias.difference(dias_joao)
-        
+
         campaign_text = open("./data/mkt_campaign.txt", "w")
         campaign_text.write(
             f"{mode(pedidos_maria)}\n"
@@ -44,4 +44,3 @@ def analyze_log(path_to_file):
             f"{joao_nunca_pediu}\n"
             f"{joao_nunca_foi}\n"
         )
-analyze_log('data/orders_1.csv')
