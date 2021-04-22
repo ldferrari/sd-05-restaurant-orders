@@ -27,14 +27,19 @@ class TrackOrders:
         resp = Counter([order[1] for order in dish_per_costumer])
         return resp.most_common(1)[0][0]
 
-    # 2.4 - Será validado se, ao executar
-    # get_never_ordered_per_costumer, o método retorna o
-    # pedido que o cliente nunca fez.
     def get_order_frequency_per_costumer(self, costumer, order):
         pass
 
+    # 2.4 - Será validado se, ao executar
+    # get_never_ordered_per_costumer, o método retorna o
+    # pedido que o cliente nunca fez.
     def get_never_ordered_per_costumer(self, costumer):
-        pass
+        pratos = set([order[1] for order in self.orders])
+        cust_pratos = set(
+            [order[1] for order in self.orders if order[0] == costumer]
+        )
+
+        return pratos.difference(cust_pratos)
 
     # 2.5 - Será validado se, ao executar get_days_never_visited_per_costumer,
     # o método retorna o dias que o cliente nunca visitou.
