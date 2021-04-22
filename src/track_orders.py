@@ -44,7 +44,12 @@ class TrackOrders:
     # 2.5 - Será validado se, ao executar get_days_never_visited_per_costumer,
     # o método retorna o dias que o cliente nunca visitou.
     def get_days_never_visited_per_costumer(self, costumer):
-        pass
+        dias = set([order[2] for order in self.orders])
+        nunca_visitou = set(
+            [order[2] for order in self.orders if order[0] == costumer]
+        )
+
+        return dias.difference(nunca_visitou)
 
     # 2.6 - Será validado se, ao executar o método get_busiest_day,
     # o método retorna o dia mais movimentado.
