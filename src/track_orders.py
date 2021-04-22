@@ -45,6 +45,7 @@ class TrackOrders:
     # o método retorna o dia mais movimentado.
     def get_busiest_day(self):
         pass
+
     # 2.7 - Será validado se, ao executar o método get_least_busy_day,
     # o método retorna o dia menos movimentado.
     def get_least_busy_day(self):
