@@ -60,4 +60,5 @@ class TrackOrders:
     # 2.7 - Será validado se, ao executar o método get_least_busy_day,
     # o método retorna o dia menos movimentado.
     def get_least_busy_day(self):
-        pass
+        days = Counter([order[2] for order in self.orders])
+        return days.most_common(3)[2][0]
