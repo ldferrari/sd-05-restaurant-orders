@@ -35,26 +35,27 @@ class TrackOrders:
     # pedido que o cliente nunca fez.
     def get_never_ordered_per_costumer(self, costumer):
         pratos = set([order[1] for order in self.orders])
-        cust_pratos = set(
+        never_ordered = set(
             [order[1] for order in self.orders if order[0] == costumer]
         )
 
-        return pratos.difference(cust_pratos)
+        return pratos.difference(never_ordered)
 
     # 2.5 - Será validado se, ao executar get_days_never_visited_per_costumer,
     # o método retorna o dias que o cliente nunca visitou.
     def get_days_never_visited_per_costumer(self, costumer):
         dias = set([order[2] for order in self.orders])
-        nunca_visitou = set(
+        never_visited = set(
             [order[2] for order in self.orders if order[0] == costumer]
         )
 
-        return dias.difference(nunca_visitou)
+        return dias.difference(never_visited)
 
     # 2.6 - Será validado se, ao executar o método get_busiest_day,
     # o método retorna o dia mais movimentado.
     def get_busiest_day(self):
-        pass
+        days = Counter([order[2] for order in self.orders])
+        return days.most_common(1)[0][0]
 
     # 2.7 - Será validado se, ao executar o método get_least_busy_day,
     # o método retorna o dia menos movimentado.
