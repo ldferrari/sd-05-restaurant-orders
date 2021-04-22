@@ -8,18 +8,18 @@ class TrackOrders:
     def __len__(self):
         return len(self.orders)
 
-    # 2.2 - Será validado se, ao executar o método add_new_order, 
+    # 2.2 - Será validado se, ao executar o método add_new_order,
     # o método deve adicionar um pedido.
     def add_new_order(self, costumer, order, day):
         self.orders.append([costumer, order, day])
 
-    # 2.3 - Será validado se, ao executar get_most_ordered_dish_per_costumer, 
+    # 2.3 - Será validado se, ao executar get_most_ordered_dish_per_costumer,
     # o método retorna o prato mais pedido.
     def get_most_ordered_dish_per_costumer(self, costumer):
         pass
 
-    # 2.4 - Será validado se, ao executar 
-    # get_never_ordered_per_costumer, o método retorna o 
+    # 2.4 - Será validado se, ao executar
+    # get_never_ordered_per_costumer, o método retorna o
     # pedido que o cliente nunca fez.
     def get_order_frequency_per_costumer(self, costumer, order):
         pass
