@@ -1,3 +1,6 @@
+from collections import Counter
+
+
 class TrackOrders:
     def __init__(self):
         self.orders = []
@@ -16,7 +19,13 @@ class TrackOrders:
     # 2.3 - Será validado se, ao executar get_most_ordered_dish_per_costumer,
     # o método retorna o prato mais pedido.
     def get_most_ordered_dish_per_costumer(self, costumer):
-        pass
+        dish_per_costumer = []
+        for costumer_name, prato, _ in self.orders:
+            if costumer_name == costumer:
+                dish_per_costumer.append([costumer_name, prato])
+
+        resp = Counter([order[1] for order in dish_per_costumer])
+        return resp.most_common(1)[0][0]
 
     # 2.4 - Será validado se, ao executar
     # get_never_ordered_per_costumer, o método retorna o
