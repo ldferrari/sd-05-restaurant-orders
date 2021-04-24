@@ -16,7 +16,7 @@ class InventoryControl:
             'massa': 50,
             'frango': 50,
         }
-        
+
         self.to_buy = {
             'pao': 0,
             'carne': 0,
@@ -38,12 +38,13 @@ class InventoryControl:
 
     def get_quantities_to_buy(self):
         return self.to_buy
-    
+
     def get_available_dishes(self):
-        dishes =  set(self.ingredients.keys())
+        dishes = set(self.ingredients.keys())
         for dish in self.ingredients.keys():
             for ingredient in self.ingredients.get(dish):
-                if self.minimum_inventory.get(ingredient) <= self.to_buy.get(ingredient):
+                qtd = self.minimum_inventory.get(ingredient)
+                if qtd <= self.to_buy.get(ingredient):
                     dishes.remove(dish)
                     break
         return dishes
