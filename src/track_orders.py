@@ -1,7 +1,7 @@
 class TrackOrders:
     def __init__(self):
         self.orders = []
-    
+
     def __len__(self):
         return len(self.orders)
 
@@ -13,15 +13,15 @@ class TrackOrders:
         })
 
     def get_most_ordered_dish_per_costumer(self, costumer):
-        count_dishes_per_costumer = dict()
-        
+        dish_per_costumer = dict()
+
         for item in self.orders:
             if costumer in item['costumer']:
-                if item['order'] not in count_dishes_per_costumer:
-                    count_dishes_per_costumer[item['order']] = 1
+                if item['order'] not in dish_per_costumer:
+                    dish_per_costumer[item['order']] = 1
                 else:
-                    count_dishes_per_costumer[item['order']] += 1
-                    return max(count_dishes_per_costumer, key=count_dishes_per_costumer.get)
+                    dish_per_costumer[item['order']] += 1
+                    return max(dish_per_costumer, key=dish_per_costumer.get)
 
         raise ValueError('Enter a valid user')
 
@@ -50,10 +50,9 @@ class TrackOrders:
 
         return days - costumer_days
 
-
     def get_busiest_day(self):
         busiest_days = dict()
-        
+
         for item in self.orders:
             if item['day'] not in busiest_days:
                 busiest_days[item['day']] = 1
@@ -64,7 +63,7 @@ class TrackOrders:
 
     def get_least_busy_day(self):
         least_busy_days = dict()
-        
+
         for item in self.orders:
             if item['day'] not in least_busy_days:
                 least_busy_days[item['day']] = 1
