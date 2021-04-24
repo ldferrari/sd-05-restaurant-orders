@@ -6,7 +6,7 @@ def maria(data):
     for order in data:
         if 'maria' in order:
             maria_orders.setdefault(order[1], 0)
-            maria_orders[order[1]] + 1
+            maria_orders[order[1]] += 1
     return max(maria_orders, key=maria_orders.get) + '\n'
 
 
