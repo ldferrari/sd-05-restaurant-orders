@@ -3,6 +3,7 @@ from os.path import isfile
 
 from collections import Counter
 
+
 def count_client_order(orders):
     return dict(Counter([item for _, item, _ in orders]))
 
