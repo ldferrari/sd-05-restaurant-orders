@@ -2,7 +2,7 @@ import csv
 
 
 def analyze_log(path_to_file):
-    maria_orders = {}
+    maria_orders = dict()
     arnaldo_counter = 0
     joao_days = set()
     joao_orders = set()
@@ -15,9 +15,8 @@ def analyze_log(path_to_file):
             catalogue.add(order[1])
             days.add(order[2])
             if 'maria' in order:
-                maria_orders[order[1]] = (
-                  1 if order[1] not in maria_orders else maria_orders[order[1]] + 1
-                )
+                maria_orders.setdefault(order[1], 0)
+                maria_orders[order[1]] + 1
             elif 'arnaldo' in order and order[1] == 'hamburguer':
                 arnaldo_counter += 1
             elif 'joao' in order:
