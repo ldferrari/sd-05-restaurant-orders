@@ -19,11 +19,14 @@ def analyze_log(path_to_file):
                     maria_orders[order[1]] = 1
                 else:
                     maria_orders[order[1]] += 1
-            elif 'arnaldo' in order and order[1] == 'hamburguer':
+                continue
+            if 'arnaldo' in order and order[1] == 'hamburguer':
                 arnaldo_counter += 1
-            elif 'joao' in order:
+                continue
+            if 'joao' in order:
                 joao_orders.add(order[1])
                 joao_days.add(order[2])
+                continue
     out = [
       max(maria_orders, key=maria_orders.get) + "\n",
       str(arnaldo_counter) + "\n",
