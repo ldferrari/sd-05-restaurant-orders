@@ -21,7 +21,7 @@ class TrackOrders:
         return never_did_it(self.orders, costumer, 1)
 
     def get_days_never_visited_per_costumer(self, costumer):
-        pass
+        return  never_did_it(self.orders, costumer, 2)
 
     def get_busiest_day(self):
         pass
