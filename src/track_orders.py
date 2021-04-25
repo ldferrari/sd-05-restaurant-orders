@@ -1,4 +1,5 @@
 from src.analyze_log import most_requested
+from src.analyze_log import never_did_it
 
 class TrackOrders:
     def __init__(self):
@@ -13,11 +14,11 @@ class TrackOrders:
     def get_most_ordered_dish_per_costumer(self, costumer):
         return most_requested(self.orders, costumer)
 
-    def get_order_frequency_per_costumer(self, costumer, order):
+    def get_order_frequency_per_costumer(self, client, request):
         pass
 
     def get_never_ordered_per_costumer(self, costumer):
-        pass
+        return never_did_it(self.orders, costumer, 1)
 
     def get_days_never_visited_per_costumer(self, costumer):
         pass
