@@ -1,3 +1,5 @@
+from src.analyze_log import most_requested
+
 class TrackOrders:
     def __init__(self):
         self.orders = list()
@@ -9,7 +11,7 @@ class TrackOrders:
         return self.orders.append([costumer, order, day])
 
     def get_most_ordered_dish_per_costumer(self, costumer):
-        pass
+        return most_requested(self.orders, costumer)
 
     def get_order_frequency_per_costumer(self, costumer, order):
         pass

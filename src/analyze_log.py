@@ -30,38 +30,50 @@ def orders_counter(orders_list, client, meal):
     return counter_food
 
 
-def never_asked_meals(orders_list, client):
-    never_asked = set()
-    did_asked = set()
-    for name, food, day in orders_list:
-        if food not in did_asked:
-            never_asked.add(food)
-        if name == client:
-            if food in never_asked:
-                never_asked.remove(food)
-            did_asked.add(food)
-    return never_asked
+def never_did_it(orders_list, client, option):
+    never_did = set()
+    did_it = set()
+    for order in orders_list:
+        never_did.add(order[option])
+        if order[0] == client:
+            did_it.add(order[option])
+    client_never_did = never_did.difference(did_it)
+    return client_never_did
+
+# def never_asked_meals(orders_list, client):
+#     never_asked = set()
+#     did_asked = set()
+#     for name, food, day in orders_list:
+#         if food not in did_asked:
+#             never_asked.add(food)
+#         if name == client:
+#             if food in never_asked:
+#                 never_asked.remove(food)
+#             did_asked.add(food)
+#     return never_asked
 
 
-def days_never_went(orders_list, client):
-    never_went = set()
-    did_went = set()
-    for name, food, day in orders_list:
-        if day not in did_went:
-            never_went.add(day)
-        if name == client:
-            if day in never_went:
-                never_went.remove(day)
-            did_went.add(day)
-    return never_went
+# def days_never_went(orders_list, client):
+#     never_went = set()
+#     did_went = set()
+#     for name, food, day in orders_list:
+#         if day not in did_went:
+#             never_went.add(day)
+#         if name == client:
+#             if day in never_went:
+#                 never_went.remove(day)
+#             did_went.add(day)
+#     return never_went
 
 
 def analyze_log(path_to_file):
     orders = read_file(path_to_file)
     maria_favorite = most_requested(orders, 'maria')
     hamburguers_of_arnaldo = orders_counter(orders, 'arnaldo', 'hamburguer')
-    joao_never_asked = never_asked_meals(orders, 'joao')
-    joao_never_went = days_never_went(orders, 'joao')
+    # joao_never_asked = never_asked_meals(orders, 'joao')
+    # joao_never_went = days_never_went(orders, 'joao')
+    joao_never_asked = never_did_it(orders, 'joao', 1)
+    joao_never_went = never_did_it(orders, 'joao', 2)
 
     with open("data/mkt_campaign.txt", "w") as log:
         log.write(f"{maria_favorite}\n")
