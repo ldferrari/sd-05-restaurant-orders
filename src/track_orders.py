@@ -1,6 +1,7 @@
 from src.analyze_log import most_requested
 from src.analyze_log import never_did_it
 
+
 class TrackOrders:
     def __init__(self):
         self.orders = list()
@@ -21,7 +22,7 @@ class TrackOrders:
         return never_did_it(self.orders, costumer, 1)
 
     def get_days_never_visited_per_costumer(self, costumer):
-        return  never_did_it(self.orders, costumer, 2)
+        return never_did_it(self.orders, costumer, 2)
 
     def get_busiest_day(self):
         pass
