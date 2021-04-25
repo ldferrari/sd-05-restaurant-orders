@@ -22,7 +22,7 @@ class TrackOrders:
         return max(most_ordered_dishes, key=most_ordered_dishes.count)
 
     def get_order_frequency_per_costumer(self, costumer, order):
-         order_count = [
+        order_count = [
             order['order']
             for order in self.orders
             if order['costumer'] == costumer
@@ -58,7 +58,6 @@ class TrackOrders:
         return unpopular
 
     def get_busiest_day(self):
-        
         days = [order['day'] for order in self.orders]
 
         return max(days, key=days.count)
