@@ -1,11 +1,24 @@
 import csv
 
 
+def most_something_by_person(persons, person, something):
+    data = persons[person][something]
+    maxData = max(data.values())
+    return [item for item, quantity in data.items() if quantity == maxData][0]
+
+
+def saida_arquivo(dado1, dado2, dado3, dado4, ):
+    with open('data/mkt_campaign.txt', 'w') as f:
+        f.write(str(dado1))
+        f.write('\n')
+        f.write(str(dado2))
+        f.write('\n')
+        f.write(str(dado3))
+        f.write('\n')
+        f.write(str(dado4))
+
+
 def analyze_log(path_to_file):
-    # nao precisava do tratamento =(
-    # if not path_to_file.endswith('.csv'):
-    #     print(path_to_file)
-    #     raise FileNotFoundError(f"No such file or directory:" + path_to_file)
     with open(path_to_file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=",")
         person_set = set()
@@ -13,6 +26,8 @@ def analyze_log(path_to_file):
         days = set()
         persons = {}
         for entry in csv_reader:
+            dishes.add(entry[1])
+            days.add(entry[2])
             if not entry[0] in person_set:
                 persons[entry[0]] = {
                     'pedido': {entry[1]: 1}, 'dia': set([entry[2]])}
@@ -23,38 +38,10 @@ def analyze_log(path_to_file):
                 else:
                     persons[entry[0]]['pedido'][entry[1]] += 1
                 persons[entry[0]]['dia'].add(entry[2])
-            dishes.add(entry[1])
-            days.add(entry[2])
 
-        maria = persons['maria']['pedido']
-        mariaMax = max(maria.values())
-        mariaPedidoMax = [p for p, q in maria.items() if q == mariaMax][0]
-
+        mariaPedidoMax = most_something_by_person(persons, 'maria', 'pedido')
         arnaldo = persons['arnaldo']['pedido']['hamburguer']
-        joao_dishes = set(persons['joao']['pedido'].keys())
-        joao_no_dishes = dishes - joao_dishes
-
+        joao_no_dishes = dishes - set(persons['joao']['pedido'].keys())
         joao_no_day = days - persons['arnaldo']['dia']
 
-# formato da entrada
-# cliente, pedido, dia
-# saida em data/mkt_campaign.txt
-# saida deve ter:
-    with open('data/mkt_campaign.txt', 'w') as f:
-        f.write(str(mariaPedidoMax))
-        f.write('\n')
-        f.write(str(arnaldo))
-        f.write('\n')
-        f.write(str(joao_no_dishes))
-        f.write('\n')
-        f.write(str(joao_no_day))
-# Qual o prato mais pedido por 'maria'?
-# Quantas vezes 'arnaldo' pediu 'hamburguer'?
-# Quais pratos 'joao' nunca pediu?
-# Quais dias 'joao' nunca foi na lanchonete?
-# ---funcao nao retorna nada
-# exemplo saida
-# hamburguer
-# 1
-# {'pizza', 'coxinha', 'misto-quente'}
-# {'sabado', 'segunda-feira'}
+    saida_arquivo(mariaPedidoMax, arnaldo, joao_no_dishes, joao_no_day)
